@@ -1,0 +1,235 @@
+
+C:\Users\Kosmo>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on 목 10월 21 11:55:20 2021
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: test_user1
+Enter password:
+ERROR:
+ORA-01045: user TEST_USER1 lacks CREATE SESSION privilege; logon denied
+
+
+Enter user-name: test_user1
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> create table tb (
+  2  idx number);
+create table tb (
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> create table tb (
+  2  idx number);
+create table tb (
+*
+ERROR at line 1:
+ORA-01950: no privileges on tablespace 'SYSTEM'
+
+
+SQL> create table tb (
+  2  idx number);
+
+Table created.
+
+SQL> desc tb;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ IDX                                                NUMBER
+
+SQL> show user;
+USER is "TEST_USER1"
+SQL> conn test_user2;
+Enter password:
+Connected.
+SQL> quit
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+C:\Users\Kosmo>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on 목 10월 21 12:35:12 2021
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: test_user2
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> create table tb (
+  2  idx number);
+create table tb (
+*
+ERROR at line 1:
+ORA-01950: no privileges on tablespace 'USERS'
+
+
+SQL> create table tb (
+  2  idx number);
+
+Table created.
+
+SQL> desc tb;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ IDX                                                NUMBER
+
+SQL> ed new_table
+
+SQL> exit
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+C:\Users\Kosmo>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on 목 10월 21 12:50:53 2021
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: test_user2
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> @new_table
+
+Table created.
+
+SQL> ed new_table
+
+SQL> desc tb_kosmo;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ IDX                                       NOT NULL NUMBER
+ USER_ID                                   NOT NULL VARCHAR2(30)
+ USER_PW                                   NOT NULL VARCHAR2(50)
+ USER_NAME                                          VARCHAR2(50)
+ POSTDATE                                           DATE
+
+SQL> ed new_table
+
+SQL> @new_table
+  incr ement by 1
+  *
+ERROR at line 2:
+ORA-00933: SQL command not properly ended
+
+
+SQL> show user;
+USER is "TEST_USER2"
+SQL> conn test_user1/1234;
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> conn test_user1/4321;
+Connected.
+SQL> show user;
+USER is "TEST_USER1"
+SQL> conn test_user2
+Enter password:
+Connected.
+SQL> ed new_table
+
+SQL> @new_table
+
+Sequence created.
+
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> select * from tb_kosmo;
+
+no rows selected
+
+SQL> ed new_table
+
+SQL> @new_table
+
+1 row created.
+
+SQL> select * from tb_kosmo;
+
+       IDX USER_ID
+---------- ------------------------------------------------------------
+USER_PW
+--------------------------------------------------------------------------------
+USER_NAME
+--------------------------------------------------------------------------------
+POSTDATE
+--------
+         1 gasan1
+1111
+digital
+21/10/21
+
+
+SQL> ed new_table
+
+SQL> show user;
+USER is "TEST_USER2"
+SQL> conn test_user3;
+Enter password:
+Connected.
+SQL> create table my_tb (
+  2  idx number primary key);
+create table my_tb (
+*
+ERROR at line 1:
+ORA-01950: no privileges on tablespace 'SYSTEM'
+
+
+SQL> exit
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+C:\Users\Kosmo>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on 목 10월 21 14:46:31 2021
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: test_user3
+Enter password:
+ERROR:
+ORA-01045: user TEST_USER3 lacks CREATE SESSION privilege; logon denied
+
+
+Enter user-name: test_user1
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Enter user-name: test_user1
+Enter password:
+ERROR:
+ORA-01045: user TEST_USER1 lacks CREATE SESSION privilege; logon denied
+
+
+SP2-0157: unable to CONNECT to ORACLE after 3 attempts, exiting SQL*Plus
+
+C:\Users\Kosmo>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on 목 10월 21 14:51:47 2021
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: test_user2
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> quit
+Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+C:\Users\Kosmo>
